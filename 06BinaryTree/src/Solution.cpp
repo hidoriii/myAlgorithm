@@ -1,6 +1,9 @@
 #include "Solution.h"
 #include <stack>
+#include <queue>
 #include <algorithm>
+#include <numeric>
+using std::queue;
 using std::stack;
 
 vector<int> Solution::preorderTraversal(TreeNode *root)
@@ -185,6 +188,170 @@ vector<int> Solution::postorderTraversal_3(TreeNode *root)
     return result;
 }
 
+vector<vector<int>> Solution::levelOrder(TreeNode *root)
+{
+    queue<TreeNode *> que;
+    if (root != nullptr)
+        que.push(root);
+    vector<vector<int>> ans;
+    while (!que.empty())
+    {
+        int size = que.size();
+        vector<int> vec;
+        for (int i = 0; i < size; ++i)
+        {
+            TreeNode *cur = que.front(); // 事先记录要弹出的结点
+            que.pop();
+            vec.push_back(cur->val); // 收集当前层结点
+            if (cur->left)           // 如果要弹出的结点存在 左/右 子节点，则 push到 que中
+                que.push(cur->left);
+            if (cur->right)
+                que.push(cur->right);
+        }
+        ans.push_back(vec); // 将当前层添加到 ans中
+    }
+    return ans;
+}
+
+vector<vector<int>> Solution::levelOrder_2(TreeNode *root)
+{
+    vector<vector<int>> ans;
+    int depth = 0;
+    order(root, ans, depth);
+    return ans;
+}
+
+vector<vector<int>> Solution::levelOrderBottom(TreeNode *root)
+{
+    queue<TreeNode *> que;
+    vector<vector<int>> ans;
+    if (root != nullptr)
+        que.push(root);
+    while (!que.empty())
+    {
+        int size = que.size();
+        vector<int> vec;
+        for (int i = 0; i < size; ++i)
+        {
+            TreeNode *cur = que.front();
+            que.pop();
+            vec.push_back(cur->val);
+            if (cur->left)
+                que.push(cur->left);
+            if (cur->right)
+                que.push(cur->right);
+        }
+        ans.push_back(vec);
+    }
+    std::reverse(ans.begin(), ans.end()); // 反转 vector
+    return ans;
+}
+
+vector<int> Solution::rightSideView(TreeNode *root)
+{
+    queue<TreeNode *> que;
+    vector<vector<int>> tmp;
+    if (root != nullptr)
+        que.push(root);
+    while (!que.empty())
+    {
+        int size = que.size();
+        vector<int> vec;
+        for (int i = 0; i < size; ++i)
+        {
+            TreeNode *cur = que.front();
+            que.pop();
+            vec.push_back(cur->val);
+            if (cur->left)
+                que.push(cur->left);
+            if (cur->right)
+                que.push(cur->right);
+        }
+        tmp.push_back(vec);
+    }
+    vector<int> ans;
+    for (auto vec : tmp)
+    {
+        ans.push_back(vec.back()); // 取每层结点中的最后一个结点
+    }
+    return ans;
+}
+
+vector<int> Solution::rightSideView_2(TreeNode *root)
+{
+    vector<int> ans;
+    rightSideViewOrder(root, ans, 0);
+    return ans;
+}
+
+vector<double> Solution::averageOfLevels(TreeNode *root)
+{
+    queue<TreeNode *> que;
+    if (root != nullptr)
+        que.push(root);
+    vector<double> ans;
+    while (!que.empty())
+    {
+        int size = que.size();
+        double sum = 0.0;
+        for (int i = 0; i < size; ++i)
+        {
+            TreeNode *cur = que.front();
+            que.pop();
+            sum += cur->val;
+            if (cur->left)
+                que.push(cur->left);
+            if (cur->right)
+                que.push(cur->right);
+        }
+        ans.push_back(sum / size); // 将当前层的平均值添加到 ans中
+    }
+    return ans;
+}
+
+vector<vector<int>> Solution::levelOrderByNTree(Node *root)
+{
+    queue<Node *> que;
+    vector<vector<int>> ans;
+    if (root)
+    {
+        que.push(root);
+    }
+    while (!que.empty())
+    {
+        int size = que.size();
+        vector<int> vec;
+        for (int i = 0; i < size; ++i)
+        {
+            Node *cur = que.front();
+            que.pop();
+            vec.push_back(cur->val);
+            if (!cur->children.empty())
+            {
+                for (auto node : cur->children)
+                {
+                    que.push(node);
+                }
+            }
+        }
+        ans.push_back(vec);
+    }
+    return ans;
+}
+
+vector<int> Solution::largestValues(TreeNode *root)
+{
+    queue<TreeNode *> que;
+    if (root)
+        que.push(root);
+    vector<int> ans;
+    while (!que.empty())
+    {
+        
+    }
+    return ans;
+}
+
 // private function members:
 
 void Solution::preorder_traversal(TreeNode *cur, vector<int> &vec)
@@ -212,4 +379,40 @@ void Solution::postorder_traversal(TreeNode *cur, vector<int> &vec)
     preorder_traversal(cur->left, vec);  // 左
     preorder_traversal(cur->right, vec); // 右
     vec.push_back(cur->val);             // 中
+}
+
+/**
+ * @brief 用于层序遍历函数 levelOrder_2 使用的递归函数
+ *
+ * @param cur
+ * @param ans
+ * @param depth
+ */
+void Solution::order(TreeNode *cur, vector<vector<int>> &ans, int depth)
+{
+    if (cur == nullptr)
+    {
+        return;
+    }
+    if (ans.size() == depth)
+    {
+        ans.push_back(vector<int>());
+    }
+    ans[depth].push_back(cur->val);
+    order(cur->left, ans, depth + 1);
+    order(cur->right, ans, depth + 1);
+}
+
+void Solution::rightSideViewOrder(TreeNode *cur, vector<int> &ans, int depth)
+{
+    if (cur == nullptr)
+        return;
+    // 先访问 当前节点，再递归地访问 右子树 和 左子树
+    if (depth == ans.size())
+    { // 如果当前节点所在深度还没有出现在 ans里，说明在该深度下当前节点是第一个被访问的节点，因此将当前节点加入 ans中
+        ans.push_back(cur->val);
+    }
+    depth++;
+    rightSideViewOrder(cur->right, ans, depth);
+    rightSideViewOrder(cur->left, ans, depth);
 }

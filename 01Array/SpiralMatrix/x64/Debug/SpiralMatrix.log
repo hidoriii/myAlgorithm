@@ -1,4 +1,0 @@
-﻿  Solution.cpp
-E:\codes\Algorithm\01Array\SpiralMatrix\Solution.cpp(52,34): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-E:\codes\Algorithm\01Array\SpiralMatrix\Solution.cpp(52,67): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-  SpiralMatrix.vcxproj -> E:\codes\Algorithm\01Array\SpiralMatrix\x64\Debug\SpiralMatrix.exe
