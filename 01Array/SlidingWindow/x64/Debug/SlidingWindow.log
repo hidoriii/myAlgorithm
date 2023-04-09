@@ -1,0 +1,7 @@
+﻿  Solution.cpp
+E:\codes\Algorithm\01Array\SlidingWindow\Solution.cpp(7,21): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+E:\codes\Algorithm\01Array\SlidingWindow\Solution.cpp(29,23): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+E:\codes\Algorithm\01Array\SlidingWindow\Solution.cpp(73,59): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  demo.cpp
+  正在生成代码...
+  SlidingWindow.vcxproj -> E:\codes\Algorithm\01Array\SlidingWindow\x64\Debug\SlidingWindow.exe
