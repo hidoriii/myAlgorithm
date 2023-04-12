@@ -14,4 +14,3 @@
 
 6. 二叉树
 
-+ 其中，前三章用 VisualStudio2022（MSVC） 编写，后面都是用的 VsCode（GCC） 编写的
