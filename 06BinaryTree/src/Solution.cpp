@@ -1,29 +1,22 @@
 #include "Solution.h"
-#include <stack>
-#include <queue>
-#include <algorithm>
-#include <numeric>
-using std::queue;
-using std::stack;
 
-
-vector<int> Solution::preorderTraversal(TreeNode* root)
+vector<int> Solution::preorderTraversal(TreeNode *root)
 {
 	vector<int> ans;
 	preorder_traversal(root, ans);
 	return ans;
 }
 
-vector<int> Solution::preorderTraversal_2(TreeNode* root)
+vector<int> Solution::preorderTraversal_2(TreeNode *root)
 {
 	if (root == nullptr)
 		return {};
-	stack<TreeNode*> st;
+	stack<TreeNode *> st;
 	vector<int> ans;
 	st.push(root); // 先把根节点入栈
 	while (!st.empty())
 	{
-		TreeNode* node = st.top(); // 取中间节点
+		TreeNode *node = st.top(); // 取中间节点
 		st.pop();
 		ans.push_back(node->val);
 		if (node->right)
@@ -34,15 +27,15 @@ vector<int> Solution::preorderTraversal_2(TreeNode* root)
 	return ans;
 }
 
-vector<int> Solution::preorderTraversal_3(TreeNode* root)
+vector<int> Solution::preorderTraversal_3(TreeNode *root)
 {
 	vector<int> result;
-	stack<TreeNode*> st;
+	stack<TreeNode *> st;
 	if (root != NULL)
 		st.push(root);
 	while (!st.empty())
 	{
-		TreeNode* node = st.top();
+		TreeNode *node = st.top();
 		if (node != NULL)
 		{
 			st.pop();
@@ -50,7 +43,7 @@ vector<int> Solution::preorderTraversal_3(TreeNode* root)
 				st.push(node->right); // 右
 			if (node->left)
 				st.push(node->left); // 左
-			st.push(node); // 中
+			st.push(node);			 // 中
 			st.push(NULL);
 		}
 		else
@@ -64,23 +57,23 @@ vector<int> Solution::preorderTraversal_3(TreeNode* root)
 	return result;
 }
 
-vector<int> Solution::inorderTraversal(TreeNode* root)
+vector<int> Solution::inorderTraversal(TreeNode *root)
 {
 	vector<int> ans;
 	inorder_traversal(root, ans);
 	return ans;
 }
 
-vector<int> Solution::inorderTraversal_2(TreeNode* root)
+vector<int> Solution::inorderTraversal_2(TreeNode *root)
 {
 	vector<int> ans;
-	stack<TreeNode*> st;
-	TreeNode* cur = root;
+	stack<TreeNode *> st;
+	TreeNode *cur = root;
 	while (cur != NULL || !st.empty())
 	{
 		if (cur != NULL) // 用指针来访问节点，访问到最底层
 		{
-			st.push(cur); // 将访问的节点放进栈
+			st.push(cur);	 // 将访问的节点放进栈
 			cur = cur->left; // 左
 		}
 		else
@@ -88,23 +81,23 @@ vector<int> Solution::inorderTraversal_2(TreeNode* root)
 			cur = st.top(); // 从栈里弹出的数据，就是要处理的数据（放进result数组里的数据）
 			st.pop();
 			ans.push_back(cur->val); // 中
-			cur = cur->right; // 右
+			cur = cur->right;		 // 右
 		}
 	}
 	return ans;
 }
 
-vector<int> Solution::inorderTraversal_3(TreeNode* root)
+vector<int> Solution::inorderTraversal_3(TreeNode *root)
 {
 	vector<int> ans;
-	stack<TreeNode*> st;
+	stack<TreeNode *> st;
 	if (root != NULL)
 	{
 		st.push(root);
 	}
 	while (!st.empty())
 	{
-		TreeNode* node = st.top();
+		TreeNode *node = st.top();
 		if (node != NULL)
 		{
 			st.pop(); // 将该节点弹出，避免重复操作，下面再将右中左节点添加到栈中
@@ -122,7 +115,7 @@ vector<int> Solution::inorderTraversal_3(TreeNode* root)
 		else
 		{
 			// 只有遇到空节点的时候，才将下一个节点放进结果集
-			st.pop(); // 将空节点弹出
+			st.pop();		 // 将空节点弹出
 			node = st.top(); // 重新取出栈中元素
 			st.pop();
 			ans.push_back(node->val); // 加入到结果集
@@ -131,23 +124,23 @@ vector<int> Solution::inorderTraversal_3(TreeNode* root)
 	return ans;
 }
 
-vector<int> Solution::postorderTraversal(TreeNode* root)
+vector<int> Solution::postorderTraversal(TreeNode *root)
 {
 	vector<int> ans;
 	postorder_traversal(root, ans);
 	return ans;
 }
 
-vector<int> Solution::postorderTraversal_2(TreeNode* root)
+vector<int> Solution::postorderTraversal_2(TreeNode *root)
 {
-	stack<TreeNode*> st;
+	stack<TreeNode *> st;
 	vector<int> ans;
 	if (root == NULL)
 		return ans;
 	st.push(root);
 	while (!st.empty())
 	{
-		TreeNode* node = st.top();
+		TreeNode *node = st.top();
 		st.pop();
 		ans.push_back(node->val);
 		if (node->left)
@@ -159,15 +152,15 @@ vector<int> Solution::postorderTraversal_2(TreeNode* root)
 	return ans;
 }
 
-vector<int> Solution::postorderTraversal_3(TreeNode* root)
+vector<int> Solution::postorderTraversal_3(TreeNode *root)
 {
 	vector<int> result;
-	stack<TreeNode*> st;
+	stack<TreeNode *> st;
 	if (root != NULL)
 		st.push(root);
 	while (!st.empty())
 	{
-		TreeNode* node = st.top();
+		TreeNode *node = st.top();
 		if (node != NULL)
 		{
 			st.pop();
@@ -190,9 +183,9 @@ vector<int> Solution::postorderTraversal_3(TreeNode* root)
 	return result;
 }
 
-vector<vector<int>> Solution::levelOrder(TreeNode* root)
+vector<vector<int>> Solution::levelOrder(TreeNode *root)
 {
-	queue<TreeNode*> que;
+	queue<TreeNode *> que;
 	if (root != nullptr)
 		que.push(root);
 	vector<vector<int>> ans;
@@ -202,10 +195,10 @@ vector<vector<int>> Solution::levelOrder(TreeNode* root)
 		vector<int> vec;
 		for (int i = 0; i < size; ++i)
 		{
-			TreeNode* cur = que.front(); // 事先记录要弹出的结点
+			TreeNode *cur = que.front(); // 事先记录要弹出的结点
 			que.pop();
 			vec.push_back(cur->val); // 收集当前层结点
-			if (cur->left) // 如果要弹出的结点存在 左/右 子节点，则 push到 que中
+			if (cur->left)			 // 如果要弹出的结点存在 左/右 子节点，则 push到 que中
 				que.push(cur->left);
 			if (cur->right)
 				que.push(cur->right);
@@ -215,7 +208,7 @@ vector<vector<int>> Solution::levelOrder(TreeNode* root)
 	return ans;
 }
 
-vector<vector<int>> Solution::levelOrder_2(TreeNode* root)
+vector<vector<int>> Solution::levelOrder_2(TreeNode *root)
 {
 	vector<vector<int>> ans;
 	int depth = 0;
@@ -223,9 +216,9 @@ vector<vector<int>> Solution::levelOrder_2(TreeNode* root)
 	return ans;
 }
 
-vector<vector<int>> Solution::levelOrderBottom(TreeNode* root)
+vector<vector<int>> Solution::levelOrderBottom(TreeNode *root)
 {
-	queue<TreeNode*> que;
+	queue<TreeNode *> que;
 	vector<vector<int>> ans;
 	if (root != nullptr)
 		que.push(root);
@@ -235,7 +228,7 @@ vector<vector<int>> Solution::levelOrderBottom(TreeNode* root)
 		vector<int> vec;
 		for (int i = 0; i < size; ++i)
 		{
-			TreeNode* cur = que.front();
+			TreeNode *cur = que.front();
 			que.pop();
 			vec.push_back(cur->val);
 			if (cur->left)
@@ -249,9 +242,9 @@ vector<vector<int>> Solution::levelOrderBottom(TreeNode* root)
 	return ans;
 }
 
-vector<int> Solution::rightSideView(TreeNode* root)
+vector<int> Solution::rightSideView(TreeNode *root)
 {
-	queue<TreeNode*> que;
+	queue<TreeNode *> que;
 	vector<vector<int>> tmp;
 	if (root != nullptr)
 		que.push(root);
@@ -261,7 +254,7 @@ vector<int> Solution::rightSideView(TreeNode* root)
 		vector<int> vec;
 		for (int i = 0; i < size; ++i)
 		{
-			TreeNode* cur = que.front();
+			TreeNode *cur = que.front();
 			que.pop();
 			vec.push_back(cur->val);
 			if (cur->left)
@@ -279,16 +272,16 @@ vector<int> Solution::rightSideView(TreeNode* root)
 	return ans;
 }
 
-vector<int> Solution::rightSideView_2(TreeNode* root)
+vector<int> Solution::rightSideView_2(TreeNode *root)
 {
 	vector<int> ans;
 	rightSideViewOrder(root, ans, 0);
 	return ans;
 }
 
-vector<double> Solution::averageOfLevels(TreeNode* root)
+vector<double> Solution::averageOfLevels(TreeNode *root)
 {
-	queue<TreeNode*> que;
+	queue<TreeNode *> que;
 	if (root != nullptr)
 		que.push(root);
 	vector<double> ans;
@@ -298,7 +291,7 @@ vector<double> Solution::averageOfLevels(TreeNode* root)
 		double sum = 0.0;
 		for (int i = 0; i < size; ++i)
 		{
-			TreeNode* cur = que.front();
+			TreeNode *cur = que.front();
 			que.pop();
 			sum += cur->val;
 			if (cur->left)
@@ -311,9 +304,9 @@ vector<double> Solution::averageOfLevels(TreeNode* root)
 	return ans;
 }
 
-vector<vector<int>> Solution::levelOrderByNTree(NNode* root)
+vector<vector<int>> Solution::levelOrderByNTree(NNode *root)
 {
-	queue<NNode*> que;
+	queue<NNode *> que;
 	vector<vector<int>> ans;
 	if (root)
 	{
@@ -325,7 +318,7 @@ vector<vector<int>> Solution::levelOrderByNTree(NNode* root)
 		vector<int> vec;
 		for (int i = 0; i < size; ++i)
 		{
-			NNode* cur = que.front();
+			NNode *cur = que.front();
 			que.pop();
 			vec.push_back(cur->val);
 			if (!cur->children.empty())
@@ -341,16 +334,16 @@ vector<vector<int>> Solution::levelOrderByNTree(NNode* root)
 	return ans;
 }
 
-vector<int> Solution::largestValues(TreeNode* root)
+vector<int> Solution::largestValues(TreeNode *root)
 {
-	queue<TreeNode*> que;
+	queue<TreeNode *> que;
 	if (root)
 		que.push(root);
 	vector<int> ans;
 	while (!que.empty())
 	{
 		int size = que.size();
-		TreeNode* tmp = que.front(); // 取第一个结点假设为最大值
+		TreeNode *tmp = que.front(); // 取第一个结点假设为最大值
 		int max = tmp->val;
 		if (tmp->left) // 需要单独判断该结点是否存在子结点，存在则入列
 		{
@@ -364,7 +357,7 @@ vector<int> Solution::largestValues(TreeNode* root)
 
 		for (int i = 0; i < size - 1; ++i) // 将假定的最大值与剩余结点进行比较，注意 size要减一
 		{
-			TreeNode* cur = que.front();
+			TreeNode *cur = que.front();
 			que.pop();
 			max = std::max(max, cur->val); // 更新 max的值
 			if (cur->left)
@@ -381,9 +374,9 @@ vector<int> Solution::largestValues(TreeNode* root)
 	return ans;
 }
 
-Node* Solution::connect(Node* root)
+Node *Solution::connect(Node *root)
 {
-	queue<Node*> que;
+	queue<Node *> que;
 	if (root)
 	{
 		que.push(root);
@@ -394,7 +387,7 @@ Node* Solution::connect(Node* root)
 		int size = que.size(); // 记录当前队列大小
 		for (int i = 0; i < size; ++i)
 		{
-			Node* cur = que.front(); // 从队首取出元素
+			Node *cur = que.front(); // 从队首取出元素
 			que.pop();
 			if (i < size - 1)
 			{
@@ -409,15 +402,15 @@ Node* Solution::connect(Node* root)
 	return root;
 }
 
-Node* Solution::connect_II(Node* root) // 与上题一模一样
+Node *Solution::connect_II(Node *root) // 与上题一模一样
 {
 	connect(root);
 	return root;
 }
 
-int Solution::maxDepth(TreeNode* root)
+int Solution::maxDepth(TreeNode *root)
 {
-	queue<TreeNode*> que;
+	queue<TreeNode *> que;
 	int ans = 0;
 	if (root)
 	{
@@ -429,7 +422,7 @@ int Solution::maxDepth(TreeNode* root)
 		int size = que.size();
 		for (int i = 0; i < size; ++i)
 		{
-			TreeNode* cur = que.front();
+			TreeNode *cur = que.front();
 			que.pop();
 			if (cur->left)
 				que.push(cur->left);
@@ -440,16 +433,16 @@ int Solution::maxDepth(TreeNode* root)
 	return ans;
 }
 
-int Solution::minDepth(TreeNode* root)
+int Solution::minDepth(TreeNode *root)
 {
-	queue<std::pair<TreeNode*, int>> que;
+	queue<std::pair<TreeNode *, int>> que;
 	if (root)
 	{
 		que.push({root, 1});
 	}
 	while (!que.empty())
 	{
-		TreeNode* node = que.front().first;
+		TreeNode *node = que.front().first;
 		int depth = que.front().second;
 		que.pop();
 		if (node->left == nullptr && node->right == nullptr) // 当左右孩子都为空的时候，说明是最低点的一层了，退出
@@ -468,7 +461,7 @@ int Solution::minDepth(TreeNode* root)
 	return 0;
 }
 
-int Solution::minDepth_2(TreeNode* root)
+int Solution::minDepth_2(TreeNode *root)
 {
 	if (root == nullptr)
 	{
@@ -492,230 +485,13 @@ int Solution::minDepth_2(TreeNode* root)
 	return min_depth + 1;
 }
 
-int Solution::minDepthByPos(TreeNode* root)
-{
-	return getMinDepthByPos(root);
-}
-
-int Solution::minDepthByPre(TreeNode* root)
-{
-	if (root == NULL)
-		return 0;
-	result = INT_MAX;
-	getMinDepthByPre(root, 1);
-	return result;
-}
-
-int Solution::countNodes(TreeNode* root)
-{
-	return getNodesNumByPos(root);
-}
-
-int Solution::countNodes_2(TreeNode* root)
-{
-	queue<TreeNode*> que;
-	if (root)
-	{
-		que.push(root);
-	}
-	int result = 0;
-	while (!que.empty())
-	{
-		int size = que.size();
-		for (int i = 0; i < size; ++i)
-		{
-			TreeNode* cur = que.front();
-			que.pop();
-			++result; // 记录结点数量
-			if (cur->left)
-				que.push(cur->left);
-			if (cur->right)
-				que.push(cur->right);
-		}
-	}
-	return result;
-}
-
-int Solution::countNodes_3(TreeNode* root)
-{
-	if (root == nullptr)
-		return 0;
-	TreeNode* left = root->left;
-	TreeNode* right = root->right;
-	int leftDepth = 0, rightDepth = 0; // 这里初始为0是有目的的，为了下面求指数方便
-
-	while (left) // 求左子树深度
-	{
-		left = left->left;
-		++leftDepth;
-	}
-	while (right) // 求右子树深度
-	{
-		right = right->right;
-		++rightDepth;
-	}
-	if (leftDepth == rightDepth)
-	{
-		return (2 << leftDepth) - 1; // 注意(2<<1) 相当于2^2，所以leftDepth初始为0
-	}
-	return countNodes_3(root->left) + countNodes_3(root->right) + 1;
-}
-
-bool Solution::isBalanced(TreeNode* root)
-{
-	return getHeightByPos(root) == -1 ? false : true;
-}
-
-bool Solution::isBalanced_2(TreeNode* root)
-{
-	stack<TreeNode*> st;
-	if (root == NULL)
-		return true;
-	st.push(root);
-	while (!st.empty())
-	{
-		TreeNode* cur = st.top(); // 中
-		st.pop();
-		if (abs(getMaxDepthByStack(cur->left) - getMaxDepthByStack(cur->right)) > 1)
-		{
-			// 判断左右孩子高度是否符合
-			return false;
-		}
-		if (cur->right) // 右（空节点不入栈）
-			st.push(cur->right);
-		if (cur->left) // 左（空节点不入栈）
-			st.push(cur->left);
-	}
-	return true;
-}
-
-TreeNode* Solution::invertTree(TreeNode* root)
-{
-	if (root == nullptr) // 确定递归终止条件：碰到 nullptr就直接 return
-		return root;
-	std::swap(root->left, root->right); // 中（交换当前结点的左、右子结点）
-	invertTree(root->left); // 左
-	invertTree(root->right); // 右
-	// std::swap(root->left, root->right); // 把这句代码放在这里就变成了后序遍历，也是可以解出来这题的
-	return root;
-}
-
-TreeNode* Solution::invertTree_2(TreeNode* root)
-{
-	if (root == nullptr)
-		return root;
-	stack<TreeNode*> st;
-	st.push(root);
-	while (!st.empty())
-	{
-		TreeNode* cur = st.top();
-		st.pop();
-		std::swap(cur->left, cur->right);
-		if (cur->right)
-			st.push(cur->right);
-		if (cur->left)
-			st.push(cur->left);
-	}
-	return root;
-}
-
-TreeNode* Solution::invertTree_3(TreeNode* root)
-{
-	stack<TreeNode*> st;
-	if (root != NULL)
-		st.push(root);
-	while (!st.empty())
-	{
-		TreeNode* node = st.top();
-		if (node != NULL)
-		{
-			st.pop();
-			if (node->right)
-				st.push(node->right); // 右
-			if (node->left)
-				st.push(node->left); // 左
-			st.push(node); // 中
-			st.push(nullptr);
-		}
-		else
-		{
-			st.pop();
-			node = st.top();
-			st.pop();
-			std::swap(node->left, node->right); // 节点处理逻辑
-		}
-	}
-	return root;
-}
-
-TreeNode* Solution::invertTree_4(TreeNode* root)
-{
-	queue<TreeNode*> que;
-	if (root)
-		que.push(root);
-	while (!que.empty())
-	{
-		int size = que.size();
-		for (int i = 0; i < size; ++i)
-		{
-			TreeNode* cur = que.front();
-			que.pop();
-			std::swap(cur->left, cur->right); // 交换 cur的左、右结点
-			if (cur->left)
-				que.push(cur->left);
-			if (cur->right)
-				que.push(cur->right);
-		}
-	}
-	return root;
-}
-
-TreeNode* Solution::invertTree_5(TreeNode* root)
-{
-	if (root == nullptr)
-		return root;
-	invertTree(root->left); // 左
-	std::swap(root->left, root->right); // 中
-	invertTree(root->left); // 注意 这里依然要遍历左子树 因为中间节点已经翻转了
-	return root;
-}
-
-TreeNode* Solution::invertTree_6(TreeNode* root)
-{
-	stack<TreeNode*> st;
-	if (root != nullptr)
-		st.push(root);
-	while (!st.empty())
-	{
-		TreeNode* node = st.top();
-		if (node)
-		{
-			st.pop();
-			if (node->right)
-				st.push(node->right); // 右
-			st.push(node); // 中
-			st.push(nullptr);
-			if (node->left)
-				st.push(node->left); // 左
-		}
-		else
-		{
-			st.pop();
-			node = st.top();
-			st.pop();
-			std::swap(node->left, node->right); // 节点处理逻辑
-		}
-	}
-	return root;
-}
-
-vector<int> Solution::morrisPre(TreeNode* root)
+vector<int> Solution::morrisPre(TreeNode *root)
 {
 	if (root == nullptr)
 		return {};
 	vector<int> ans;
-	TreeNode *cur = root, // cur表示当前结点
-	         *mostRight = nullptr; // mostRight表示 cur的左孩子的最右结点
+	TreeNode *cur = root,	  // cur表示当前结点
+		*mostRight = nullptr; // mostRight表示 cur的左孩子的最右结点
 	while (cur != nullptr)
 	{
 		mostRight = cur->left;
@@ -746,13 +522,13 @@ vector<int> Solution::morrisPre(TreeNode* root)
 	return ans;
 }
 
-vector<int> Solution::morrisIn(TreeNode* root)
+vector<int> Solution::morrisIn(TreeNode *root)
 {
 	if (root == nullptr)
 		return {};
 	vector<int> ans;
 	TreeNode *cur = root,
-	         *mostRight = nullptr;
+			 *mostRight = nullptr;
 	while (cur)
 	{
 		mostRight = cur->left;
@@ -779,13 +555,13 @@ vector<int> Solution::morrisIn(TreeNode* root)
 	return ans;
 }
 
-vector<int> Solution::morrisPos(TreeNode* root)
+vector<int> Solution::morrisPos(TreeNode *root)
 {
 	if (root == nullptr)
 		return {};
 	vector<int> ans;
 	TreeNode *cur = root,
-	         *mostRight = nullptr;
+			 *mostRight = nullptr;
 	while (cur)
 	{
 		mostRight = cur->left;
@@ -813,25 +589,145 @@ vector<int> Solution::morrisPos(TreeNode* root)
 	return ans;
 }
 
-bool Solution::isSymmetric(TreeNode* root)
+TreeNode *Solution::invertTree(TreeNode *root)
+{
+	if (root == nullptr) // 确定递归终止条件：碰到 nullptr就直接 return
+		return root;
+	std::swap(root->left, root->right); // 中（交换当前结点的左、右子结点）
+	invertTree(root->left);				// 左
+	invertTree(root->right);			// 右
+	// std::swap(root->left, root->right); // 把这句代码放在这里就变成了后序遍历，也是可以解出来这题的
+	return root;
+}
+
+TreeNode *Solution::invertTree_2(TreeNode *root)
+{
+	if (root == nullptr)
+		return root;
+	stack<TreeNode *> st;
+	st.push(root);
+	while (!st.empty())
+	{
+		TreeNode *cur = st.top();
+		st.pop();
+		std::swap(cur->left, cur->right);
+		if (cur->right)
+			st.push(cur->right);
+		if (cur->left)
+			st.push(cur->left);
+	}
+	return root;
+}
+
+TreeNode *Solution::invertTree_3(TreeNode *root)
+{
+	stack<TreeNode *> st;
+	if (root != NULL)
+		st.push(root);
+	while (!st.empty())
+	{
+		TreeNode *node = st.top();
+		if (node != NULL)
+		{
+			st.pop();
+			if (node->right)
+				st.push(node->right); // 右
+			if (node->left)
+				st.push(node->left); // 左
+			st.push(node);			 // 中
+			st.push(nullptr);
+		}
+		else
+		{
+			st.pop();
+			node = st.top();
+			st.pop();
+			std::swap(node->left, node->right); // 节点处理逻辑
+		}
+	}
+	return root;
+}
+
+TreeNode *Solution::invertTree_4(TreeNode *root)
+{
+	queue<TreeNode *> que;
+	if (root)
+		que.push(root);
+	while (!que.empty())
+	{
+		int size = que.size();
+		for (int i = 0; i < size; ++i)
+		{
+			TreeNode *cur = que.front();
+			que.pop();
+			std::swap(cur->left, cur->right); // 交换 cur的左、右结点
+			if (cur->left)
+				que.push(cur->left);
+			if (cur->right)
+				que.push(cur->right);
+		}
+	}
+	return root;
+}
+
+TreeNode *Solution::invertTree_5(TreeNode *root)
+{
+	if (root == nullptr)
+		return root;
+	invertTree(root->left);				// 左
+	std::swap(root->left, root->right); // 中
+	invertTree(root->left);				// 注意 这里依然要遍历左子树 因为中间节点已经翻转了
+	return root;
+}
+
+TreeNode *Solution::invertTree_6(TreeNode *root)
+{
+	stack<TreeNode *> st;
+	if (root != nullptr)
+		st.push(root);
+	while (!st.empty())
+	{
+		TreeNode *node = st.top();
+		if (node)
+		{
+			st.pop();
+			if (node->right)
+				st.push(node->right); // 右
+			st.push(node);			  // 中
+			st.push(nullptr);
+			if (node->left)
+				st.push(node->left); // 左
+		}
+		else
+		{
+			st.pop();
+			node = st.top();
+			st.pop();
+			std::swap(node->left, node->right); // 节点处理逻辑
+		}
+	}
+	return root;
+}
+
+bool Solution::isSymmetric(TreeNode *root)
 {
 	if (root == nullptr)
 		return true;
 	return compare(root->left, root->right);
 }
 
-bool Solution::isSymmetric_2(TreeNode* root)
+bool Solution::isSymmetric_2(TreeNode *root)
 {
 	if (root == nullptr)
 		return true;
-	queue<TreeNode*> que;
-	que.push(root->left); // 将左子树头结点加入队列
+	queue<TreeNode *> que;
+	que.push(root->left);  // 将左子树头结点加入队列
 	que.push(root->right); // 将右子树头结点加入队列
-	while (!que.empty()) // 接下来就要判断这两个树是否相互翻转
+	while (!que.empty())   // 接下来就要判断这两个树是否相互翻转
 	{
-		TreeNode* leftNode = que.front();
+		TreeNode *leftNode = que.front();
 		que.pop();
-		TreeNode* rightNode = que.front();
+		TreeNode *rightNode = que.front();
 		que.pop();
 		if (!leftNode && !rightNode) // 左节点为空、右节点为空，此时说明是对称的
 		{
@@ -842,27 +738,27 @@ bool Solution::isSymmetric_2(TreeNode* root)
 		{
 			return false;
 		}
-		que.push(leftNode->left); // 加入左节点左孩子
+		que.push(leftNode->left);	// 加入左节点左孩子
 		que.push(rightNode->right); // 加入右节点右孩子
-		que.push(leftNode->right); // 加入左节点右孩子
-		que.push(rightNode->left); // 加入右节点左孩子
+		que.push(leftNode->right);	// 加入左节点右孩子
+		que.push(rightNode->left);	// 加入右节点左孩子
 	}
 	return true;
 }
 
-bool Solution::isSymmetric_3(TreeNode* root)
+bool Solution::isSymmetric_3(TreeNode *root)
 {
 	// 只要把 队列(queue) 原封不动的改成 栈(stack) 就可以了
 	if (root == nullptr)
 		return true;
-	stack<TreeNode*> st;
+	stack<TreeNode *> st;
 	st.push(root->left);
 	st.push(root->right);
 	while (!st.empty())
 	{
-		TreeNode* leftNode = st.top();
+		TreeNode *leftNode = st.top();
 		st.pop();
-		TreeNode* rightNode = st.top();
+		TreeNode *rightNode = st.top();
 		st.pop();
 		if (!leftNode && !rightNode) // 左节点为空、右节点为空，此时说明是对称的
 		{
@@ -880,7 +776,7 @@ bool Solution::isSymmetric_3(TreeNode* root)
 	return true;
 }
 
-bool Solution::isSameTree(TreeNode* p, TreeNode* q)
+bool Solution::isSameTree(TreeNode *p, TreeNode *q)
 {
 	if (p == nullptr && q == nullptr)
 		return true;
@@ -892,13 +788,13 @@ bool Solution::isSameTree(TreeNode* p, TreeNode* q)
 		return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
 }
 
-bool Solution::isSameTree_2(TreeNode* p, TreeNode* q)
+bool Solution::isSameTree_2(TreeNode *p, TreeNode *q)
 {
 	if (p == nullptr && q == nullptr)
 		return true;
 	else if (p == nullptr || q == nullptr)
 		return false;
-	queue<TreeNode*> queue1, queue2;
+	queue<TreeNode *> queue1, queue2;
 	queue1.push(p);
 	queue2.push(q);
 	while (!queue1.empty() && !queue2.empty())
@@ -940,19 +836,19 @@ bool Solution::isSameTree_2(TreeNode* p, TreeNode* q)
 	return queue1.empty() && queue2.empty();
 }
 
-bool Solution::isSubtree(TreeNode* root, TreeNode* subRoot)
+bool Solution::isSubtree(TreeNode *root, TreeNode *subRoot)
 {
 	return dfs(root, subRoot);
 }
 
-bool Solution::isSubtree_2(TreeNode* root, TreeNode* subRoot)
+bool Solution::isSubtree_2(TreeNode *root, TreeNode *subRoot)
 {
 	int maxElement = INT_MIN;
 	getMaxElement(root, maxElement);
 	getMaxElement(subRoot, maxElement);
 	vector<int> sOrder, tOrder;
 	int lNull = maxElement + 1,
-	    rNull = maxElement + 2;
+		rNull = maxElement + 2;
 	getDfsOrder(root, sOrder, lNull, rNull);
 	getDfsOrder(subRoot, tOrder, lNull, rNull);
 	return kmp(sOrder, tOrder);
@@ -975,7 +871,7 @@ void Solution::getPrime()
 	}
 }
 
-void Solution::dfs_hash(TreeNode* o, unordered_map<TreeNode*, Status>& h)
+void Solution::dfs_hash(TreeNode *o, unordered_map<TreeNode *, Status> &h)
 {
 	h[o] = Status(o->val, 1);
 	if (!o->left && !o->right)
@@ -994,13 +890,13 @@ void Solution::dfs_hash(TreeNode* o, unordered_map<TreeNode*, Status>& h)
 	}
 }
 
-bool Solution::isSubtree_3(TreeNode* root, TreeNode* subRoot)
+bool Solution::isSubtree_3(TreeNode *root, TreeNode *subRoot)
 {
 	getPrime();
 	dfs_hash(root, hS);
 	dfs_hash(subRoot, hT);
 	int tHash = hT[subRoot].f;
-	for (const auto& [k, v] : hS)
+	for (const auto &[k, v] : hS)
 	{
 		if (v.f == tHash)
 		{
@@ -1011,12 +907,12 @@ bool Solution::isSubtree_3(TreeNode* root, TreeNode* subRoot)
 }
 
 // 再探二叉树的最大深度：
-int Solution::maxDepthByPos(TreeNode* root)
+int Solution::maxDepthByPos(TreeNode *root)
 {
 	return getMaxDepthByPost(root);
 }
 
-int Solution::maxDepthByPre(TreeNode* root)
+int Solution::maxDepthByPre(TreeNode *root)
 {
 	result = 0;
 	if (root == nullptr)
@@ -1025,7 +921,7 @@ int Solution::maxDepthByPre(TreeNode* root)
 	return result;
 }
 
-int Solution::maxDepthInNTree(NNode* root)
+int Solution::maxDepthInNTree(NNode *root)
 {
 	if (root == nullptr)
 		return 0;
@@ -1037,9 +933,9 @@ int Solution::maxDepthInNTree(NNode* root)
 	return max_depth + 1;
 }
 
-int Solution::maxDepthInNTree_2(NNode* root)
+int Solution::maxDepthInNTree_2(NNode *root)
 {
-	queue<NNode*> que;
+	queue<NNode *> que;
 	if (root)
 		que.push(root);
 	int depth = 0;
@@ -1049,7 +945,7 @@ int Solution::maxDepthInNTree_2(NNode* root)
 		depth++; // 记录深度
 		for (int i = 0; i < size; ++i)
 		{
-			NNode* cur = que.front();
+			NNode *cur = que.front();
 			que.pop();
 			for (auto node : cur->children)
 			{
@@ -1061,33 +957,184 @@ int Solution::maxDepthInNTree_2(NNode* root)
 	return depth;
 }
 
+int Solution::minDepthByPos(TreeNode *root)
+{
+	return getMinDepthByPos(root);
+}
+
+int Solution::minDepthByPre(TreeNode *root)
+{
+	if (root == NULL)
+		return 0;
+	result = INT_MAX;
+	getMinDepthByPre(root, 1);
+	return result;
+}
+
+int Solution::countNodes(TreeNode *root)
+{
+	return getNodesNumByPos(root);
+}
+
+int Solution::countNodes_2(TreeNode *root)
+{
+	queue<TreeNode *> que;
+	if (root)
+	{
+		que.push(root);
+	}
+	int result = 0;
+	while (!que.empty())
+	{
+		int size = que.size();
+		for (int i = 0; i < size; ++i)
+		{
+			TreeNode *cur = que.front();
+			que.pop();
+			++result; // 记录结点数量
+			if (cur->left)
+				que.push(cur->left);
+			if (cur->right)
+				que.push(cur->right);
+		}
+	}
+	return result;
+}
+
+int Solution::countNodes_3(TreeNode *root)
+{
+	if (root == nullptr)
+		return 0;
+	TreeNode *left = root->left;
+	TreeNode *right = root->right;
+	int leftDepth = 0, rightDepth = 0; // 这里初始为0是有目的的，为了下面求指数方便
+
+	while (left) // 求左子树深度
+	{
+		left = left->left;
+		++leftDepth;
+	}
+	while (right) // 求右子树深度
+	{
+		right = right->right;
+		++rightDepth;
+	}
+	if (leftDepth == rightDepth)
+	{
+		return (2 << leftDepth) - 1; // 注意(2<<1) 相当于2^2，所以leftDepth初始为0
+	}
+	return countNodes_3(root->left) + countNodes_3(root->right) + 1;
+}
+
+bool Solution::isBalanced(TreeNode *root)
+{
+	return getHeightByPos(root) == -1 ? false : true;
+}
+
+bool Solution::isBalanced_2(TreeNode *root)
+{
+	stack<TreeNode *> st;
+	if (root == NULL)
+		return true;
+	st.push(root);
+	while (!st.empty())
+	{
+		TreeNode *cur = st.top(); // 中
+		st.pop();
+		if (abs(getMaxDepthByStack(cur->left) - getMaxDepthByStack(cur->right)) > 1)
+		{
+			// 判断左右孩子高度是否符合
+			return false;
+		}
+		if (cur->right) // 右（空节点不入栈）
+			st.push(cur->right);
+		if (cur->left) // 左（空节点不入栈）
+			st.push(cur->left);
+	}
+	return true;
+}
+
+vector<string> Solution::binaryTreePaths(TreeNode *root)
+{
+	if (!root)
+		return {};
+	vector<int> path;	// 收集路径
+	vector<string> ans; // 收集结果字符串
+	traversal(root, path, ans);
+	return ans;
+}
+
+vector<string> Solution::binaryTreePaths_2(TreeNode *root)
+{
+	if (!root)
+		return {};
+	string path;
+	vector<string> ans;
+	traversal_2(root, path, ans);
+	return ans;
+}
+
+vector<string> Solution::binaryTreePaths_3(TreeNode *root)
+{
+	stack<TreeNode *> treeSt; // 保存树的遍历节点
+	stack<string> pathSt;	  // 保存遍历路径的节点
+	vector<string> ans;		  // 保存最终路径集合
+	if (!root)
+		return ans;
+	treeSt.push(root);
+	pathSt.push(std::to_string(root->val));
+	while (!treeSt.empty())
+	{
+		TreeNode *node = treeSt.top();
+		treeSt.pop(); // 取出节点 ———— 中
+		string path = pathSt.top();
+		pathSt.pop(); // 取出该节点对应的路径
+		// 遇到叶子节点
+		if (node->left == NULL && node->right == NULL)
+		{
+			ans.push_back(path);
+		}
+		if (node->right) // 右
+		{
+			treeSt.push(node->right);
+			pathSt.push(path + "->" + std::to_string(node->right->val));
+		}
+		if (node->left) // 左
+		{
+			treeSt.push(node->left);
+			pathSt.push(path + "->" + std::to_string(node->left->val));
+		}
+	}
+	return ans;
+}
+
 // private members:
 
-void Solution::preorder_traversal(TreeNode* cur, vector<int>& vec)
+void Solution::preorder_traversal(TreeNode *cur, vector<int> &vec)
 {
 	if (cur == NULL)
 		return;
-	vec.push_back(cur->val); // 中
-	preorder_traversal(cur->left, vec); // 左
+	vec.push_back(cur->val);			 // 中
+	preorder_traversal(cur->left, vec);	 // 左
 	preorder_traversal(cur->right, vec); // 右
 }
 
-void Solution::inorder_traversal(TreeNode* cur, vector<int>& vec)
+void Solution::inorder_traversal(TreeNode *cur, vector<int> &vec)
 {
 	if (cur == NULL)
 		return;
-	preorder_traversal(cur->left, vec); // 左
-	vec.push_back(cur->val); // 中
+	preorder_traversal(cur->left, vec);	 // 左
+	vec.push_back(cur->val);			 // 中
 	preorder_traversal(cur->right, vec); // 右
 }
 
-void Solution::postorder_traversal(TreeNode* cur, vector<int>& vec)
+void Solution::postorder_traversal(TreeNode *cur, vector<int> &vec)
 {
 	if (cur == NULL)
 		return;
-	preorder_traversal(cur->left, vec); // 左
+	preorder_traversal(cur->left, vec);	 // 左
 	preorder_traversal(cur->right, vec); // 右
-	vec.push_back(cur->val); // 中
+	vec.push_back(cur->val);			 // 中
 }
 
 /**
@@ -1097,7 +1144,7 @@ void Solution::postorder_traversal(TreeNode* cur, vector<int>& vec)
  * @param ans
  * @param depth
  */
-void Solution::order(TreeNode* cur, vector<vector<int>>& ans, int depth)
+void Solution::order(TreeNode *cur, vector<vector<int>> &ans, int depth)
 {
 	if (cur == nullptr)
 	{
@@ -1119,7 +1166,7 @@ void Solution::order(TreeNode* cur, vector<vector<int>>& ans, int depth)
  * @param ans
  * @param depth
  */
-void Solution::rightSideViewOrder(TreeNode* cur, vector<int>& ans, int depth)
+void Solution::rightSideViewOrder(TreeNode *cur, vector<int> &ans, int depth)
 {
 	if (cur == nullptr)
 		return;
@@ -1140,10 +1187,10 @@ void Solution::rightSideViewOrder(TreeNode* cur, vector<int>& ans, int depth)
  * @param node
  * @param result 保存处理后的结果
  */
-void Solution::dealEdge(TreeNode* node, vector<int>& result)
+void Solution::dealEdge(TreeNode *node, vector<int> &result)
 {
-	TreeNode* tail = reverseEdge(node);
-	TreeNode* cur = tail;
+	TreeNode *tail = reverseEdge(node);
+	TreeNode *cur = tail;
 	while (cur)
 	{
 		result.push_back(cur->val);
@@ -1158,10 +1205,10 @@ void Solution::dealEdge(TreeNode* node, vector<int>& result)
  * @param node
  * @return TreeNode*
  */
-TreeNode* Solution::reverseEdge(TreeNode* node)
+TreeNode *Solution::reverseEdge(TreeNode *node)
 {
 	TreeNode *pre = nullptr,
-	         *next = nullptr;
+			 *next = nullptr;
 	while (node)
 	{
 		next = node->right;
@@ -1172,7 +1219,7 @@ TreeNode* Solution::reverseEdge(TreeNode* node)
 	return pre;
 }
 
-bool Solution::compare(TreeNode* left, TreeNode* right)
+bool Solution::compare(TreeNode *left, TreeNode *right)
 {
 	// 确定递归终止条件： 首先排除空节点的情况
 	if (left == nullptr && right != nullptr)
@@ -1181,20 +1228,20 @@ bool Solution::compare(TreeNode* left, TreeNode* right)
 		return false;
 	else if (left == nullptr && right == nullptr)
 		return true;
-		// 排除了空节点，再排除数值不相同的情况
+	// 排除了空节点，再排除数值不相同的情况
 	else if (left->val != right->val) // 注意这里我没有使用else
 		return false;
 	// 确定单层递归的逻辑：
 	// 此时就是：左右节点都不为空，且数值相同的情况
 	// 此时才做递归，做下一层的判断
 	bool outside = compare(left->left, right->right); // 左子树：左、 右子树：右
-	bool inside = compare(left->right, right->left); // 左子树：右、 右子树：左
-	bool isSame = outside && inside; // 左子树：中、 右子树：中（逻辑处理）
+	bool inside = compare(left->right, right->left);  // 左子树：右、 右子树：左
+	bool isSame = outside && inside;				  // 左子树：中、 右子树：中（逻辑处理）
 	return isSame;
 	// 当然可以把这些代码整理的简洁一点，但是可能会隐藏掉一些逻辑，这边就不整理了
 }
 
-bool Solution::check(TreeNode* o, TreeNode* t)
+bool Solution::check(TreeNode *o, TreeNode *t)
 {
 	if (!o && !t)
 	{
@@ -1207,7 +1254,7 @@ bool Solution::check(TreeNode* o, TreeNode* t)
 	return check(o->left, t->left) && check(o->right, t->right);
 }
 
-bool Solution::dfs(TreeNode* o, TreeNode* t)
+bool Solution::dfs(TreeNode *o, TreeNode *t)
 {
 	if (!o)
 	{
@@ -1216,7 +1263,7 @@ bool Solution::dfs(TreeNode* o, TreeNode* t)
 	return check(o, t) || dfs(o->left, t) || dfs(o->right, t);
 }
 
-void Solution::getMaxElement(TreeNode* node, int& maxElement)
+void Solution::getMaxElement(TreeNode *node, int &maxElement)
 {
 	if (!node)
 	{
@@ -1227,7 +1274,7 @@ void Solution::getMaxElement(TreeNode* node, int& maxElement)
 	getMaxElement(node->right, maxElement);
 }
 
-void Solution::getDfsOrder(TreeNode* node, vector<int>& tar, int& lNull, int& rNull)
+void Solution::getDfsOrder(TreeNode *node, vector<int> &tar, int &lNull, int &rNull)
 {
 	if (!node)
 	{
@@ -1252,7 +1299,7 @@ void Solution::getDfsOrder(TreeNode* node, vector<int>& tar, int& lNull, int& rN
 	}
 }
 
-bool Solution::kmp(vector<int>& sOrder, vector<int>& tOrder)
+bool Solution::kmp(vector<int> &sOrder, vector<int> &tOrder)
 {
 	int sLen = sOrder.size(), tLen = tOrder.size();
 	vector<int> fail(tLen, -1);
@@ -1286,7 +1333,7 @@ bool Solution::kmp(vector<int>& sOrder, vector<int>& tOrder)
 	return false;
 }
 
-int Solution::getHeightByPos(TreeNode* node)
+int Solution::getHeightByPos(TreeNode *node)
 {
 	// -1 表示已经不是平衡二叉树了，否则返回值是以该节点为根节点树的高度
 	if (node == nullptr)
@@ -1311,9 +1358,8 @@ int Solution::getHeightByPos(TreeNode* node)
 	// return std::abs(leftHeight - rightHeight) > 1 ? -1 : 1 + std::max(leftHeight, rightHeight);
 }
 
-int Solution::getMaxDepthByPost(TreeNode* node)
+int Solution::getMaxDepthByPost(TreeNode *node)
 {
-	
 	if (node == nullptr)
 		return 0;
 	int leftDepth = getMaxDepthByPost(node->left);
@@ -1322,7 +1368,7 @@ int Solution::getMaxDepthByPost(TreeNode* node)
 	return max_depth;
 }
 
-void Solution::getMaxDepthByPre(TreeNode* node, int depth)
+void Solution::getMaxDepthByPre(TreeNode *node, int depth)
 {
 	result = depth > result ? depth : result; // 中
 	if (node->left == nullptr && node->right == nullptr)
@@ -1342,11 +1388,11 @@ void Solution::getMaxDepthByPre(TreeNode* node, int depth)
 	return;
 }
 
-int Solution::getMinDepthByPos(TreeNode* node)
+int Solution::getMinDepthByPos(TreeNode *node)
 {
 	if (node == nullptr)
 		return 0;
-	int leftDepth = getMinDepthByPos(node->left); // 左
+	int leftDepth = getMinDepthByPos(node->left);	// 左
 	int rightDepth = getMinDepthByPos(node->right); // 右
 	// 中
 	// 当一个左子树为空，右不为空，这时并不是最低点
@@ -1363,7 +1409,7 @@ int Solution::getMinDepthByPos(TreeNode* node)
 	return result;
 }
 
-void Solution::getMinDepthByPre(TreeNode* node, int depth)
+void Solution::getMinDepthByPre(TreeNode *node, int depth)
 {
 	if (node->left == nullptr && node->right == nullptr)
 	{
@@ -1382,28 +1428,28 @@ void Solution::getMinDepthByPre(TreeNode* node, int depth)
 	return;
 }
 
-int Solution::getNodesNumByPos(TreeNode* node)
+int Solution::getNodesNumByPos(TreeNode *node)
 {
 	if (node == nullptr)
 		return 0;
-	int leftNum = getNodesNumByPos(node->left); // 左
+	int leftNum = getNodesNumByPos(node->left);	  // 左
 	int rightNum = getNodesNumByPos(node->right); // 右
-	int treeNum = leftNum + rightNum + 1; // 中
+	int treeNum = leftNum + rightNum + 1;		  // 中
 	return treeNum;
 }
 
-int Solution::getMaxDepthByStack(TreeNode* node)
+int Solution::getMaxDepthByStack(TreeNode *node)
 {
 	// node节点的最大深度，就是cur的高度
 
-	stack<TreeNode*> st;
+	stack<TreeNode *> st;
 	if (node != nullptr)
 		st.push(node);
 	int depth = 0; // 记录深度
 	int ans = 0;
 	while (!st.empty())
 	{
-		TreeNode* cur = st.top();
+		TreeNode *cur = st.top();
 		if (cur != nullptr)
 		{
 			st.pop();
@@ -1425,4 +1471,46 @@ int Solution::getMaxDepthByStack(TreeNode* node)
 		ans = ans > depth ? ans : depth;
 	}
 	return ans;
+}
+
+void Solution::traversal(TreeNode *cur, vector<int> &path, vector<string> &result)
+{
+	path.push_back(cur->val); // 中，中为什么写在这里，因为最后一个节点也要加入到 path中
+	// 遇到叶子节点（这才到了叶子节点）
+	if (cur->left == nullptr && cur->right == nullptr)
+	{
+		string sPath;
+		for (int i = 0; i < path.size() - 1; ++i) // 将 path里记录的路径转为 string格式
+		{
+			sPath += std::to_string(path[i]);
+			sPath += "->";
+		}
+		sPath += std::to_string(path[path.size() - 1]); // 记录最后一个结点
+		result.push_back(sPath);						// 收集一个路径
+		return;
+	}
+	if (cur->left) // 左 （因为上面没有判断 cur是否为空，所以这边需要单独进行判断）
+	{
+		traversal(cur->left, path, result);
+		path.pop_back(); // 回溯
+	}
+	if (cur->right) // 右
+	{
+		traversal(cur->right, path, result);
+		path.pop_back(); // 回溯
+	}
+}
+
+void Solution::traversal_2(TreeNode *cur, string path, vector<string> &result)
+{
+	path += std::to_string(cur->val); // 中
+	if (!cur->left && !cur->right)
+	{
+		result.push_back(path);
+		return;
+	}
+	if (cur->left) // 左
+		traversal_2(cur->left, path + "->", result);
+	if (cur->right) // 右
+		traversal_2(cur->right, path + "->", result);
 }
